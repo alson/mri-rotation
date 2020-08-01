@@ -1,18 +1,18 @@
 {
-    "name": "Mnist_LeNet",
+    "name": "Adni_Net",
     "n_gpu": 1,
 
     "arch": {
-        "type": "MnistModel",
+        "type": "AdniModel",
         "args": {}
     },
     "data_loader": {
-        "type": "MnistDataLoader",
+        "type": "AdniDataLoader",
         "args":{
             "data_dir": "data/",
             "batch_size": 128,
             "shuffle": true,
-            "validation_split": 0.1,
+            "validation_split": 0.2,
             "num_workers": 2
         }
     },
@@ -24,9 +24,9 @@
             "amsgrad": true
         }
     },
-    "loss": "nll_loss",
+    "loss": "l1_loss",
     "metrics": [
-        "accuracy", "top_k_acc"
+        "mean_absolute_error"
     ],
     "lr_scheduler": {
         "type": "StepLR",
