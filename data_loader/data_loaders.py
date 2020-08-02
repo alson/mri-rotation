@@ -34,11 +34,10 @@ class AdniDataLoader(BaseDataLoader):
             return None, None
 
         sample_groups = {s[0].split('/')[-1] for s in self.dataset.samples}
-        valid_grps, train_grps = map(set, train_test_split(sample_groups, test_size=split))
+        train_groups, valid_groups = map(set, train_test_split(list(sample_groups), test_size=split))
 
-        train_idx = [idx for idx, samp in self.dataset.samples if samp[0].split('/')[-1] in train_grps]
-        valid_idx = [idx for idx, samp in self.dataset.samples if samp[0].split('/')[-1] in valid_grps]
-
+        train_idx = [idx for idx, sample in enumerate(self.dataset.samples) if sample[0].split('/')[-1] in train_groups]
+        valid_idx = [idx for idx, sample in enumerate(self.dataset.samples) if sample[0].split('/')[-1] in valid_groups]
         train_sampler = SubsetRandomSampler(train_idx)
         valid_sampler = SubsetRandomSampler(valid_idx)
 
