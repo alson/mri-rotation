@@ -1,4 +1,5 @@
 import os
+from math import sin, cos, pi
 
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -6,6 +7,7 @@ from torch.utils.data import SubsetRandomSampler
 from torchvision import transforms
 from base import BaseDataLoader
 from torchvision.datasets import DatasetFolder
+import torch
 
 
 class AdniDataset(DatasetFolder):
@@ -25,8 +27,13 @@ class AdniDataLoader(BaseDataLoader):
             transforms.Lambda(lambda x: x.repeat(3, 1, 1)),
             transforms.Normalize((0.5,), (0.5,)),
         ])
+        target_trsfm = transforms.Compose([
+            transforms.Lambda(lambda x: float(x)),
+            transforms.Lambda(lambda x: x / 180 * pi),
+            transforms.Lambda(lambda x: torch.tensor([sin(x), cos(x)])),
+        ])
         self.data_dir = data_dir
-        self.dataset = AdniDataset(self.data_dir, train=training, transform=trsfm, target_transform=float)
+        self.dataset = AdniDataset(self.data_dir, train=training, transform=trsfm, target_transform=target_trsfm)
         super().__init__(self.dataset, batch_size, shuffle, validation_split, num_workers)
 
     def _split_sampler(self, split):

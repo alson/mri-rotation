@@ -8,4 +8,4 @@ from torchvision.models.resnet import BasicBlock
 class AdniModel(ResNet):
     def __init__(self, **kwargs):
         super().__init__(BasicBlock, [2, 2, 2, 2], **kwargs)
-        self.fc = nn.Linear(512 * BasicBlock.expansion, 1)
+        self.fc = nn.Linear(512 * BasicBlock.expansion, 2)
