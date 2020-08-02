@@ -1,0 +1,1 @@
+Put the rotated data created by `nfi_rotate.py` here.
