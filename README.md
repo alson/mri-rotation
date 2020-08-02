@@ -29,3 +29,9 @@ Create a train / test split (with the default 0.2 test fraction):
 Train the network using the PyTorech template script:
 
 `python train.py -c config.json`
+
+### Visualizing training with Tensorboard
+
+You may need to manually install setuptools >= 49.0.0 through `pip` due to (this poetry bug / missing feature)[https://github.com/python-poetry/poetry/issues/1584]. Then run Tensorboard per the PyTorch template README:
+
+`tensorboard --logdir saved/log/`
