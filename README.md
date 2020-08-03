@@ -10,11 +10,11 @@ This is an experiment in training a deep neural network to learn to identify the
 
 This is based on [Victor Huang's PyTorch template project](https://github.com/victoresque/pytorch-template).
 
-This project uses (Poetry)[https://python-poetry.org/] to manage dependencies and virtual environments. Use `poetry install` to set up a virtual environment with all dependencies installed. Then use `poetry shell` or `poetry run` to run commands inside this environment. All commands below should be run within the virtual environment created by Poetry from the project root.
+This project uses [Poetry](https://python-poetry.org/) to manage dependencies and virtual environments. Use `poetry install` to set up a virtual environment with all dependencies installed. Then use `poetry shell` or `poetry run` to run commands inside this environment. All commands below should be run within the virtual environment created by Poetry from the project root.
 
 ### Data
 
-This uses data from the (Alzheimer’s Disease Neuroimaging Initiative)[http://adni.loni.usc.edu/]. See the website for details about how to get access to the data, and if you qualify.
+This uses data from the [Alzheimer’s Disease Neuroimaging Initiative](http://adni.loni.usc.edu/). See the website for details about how to get access to the data, and if you qualify.
 
 Now create the rotated scans by in a larger space (square with sides that are the diagonal of the original image) in 1 degree increments, and store this label as folder name in the current folder:
 
