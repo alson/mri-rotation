@@ -26,7 +26,7 @@ Create a train / test split (with the default 0.2 test fraction):
 
 ### Training the model
 
-Train the network using the PyTorech template script:
+Train the network using the PyTorch template script:
 
 `python train.py -c config.json`
 
