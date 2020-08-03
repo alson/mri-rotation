@@ -5,13 +5,15 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from torch.utils.data import SubsetRandomSampler
 from torchvision import transforms
+from torchvision.transforms import functional as TF
 from base import BaseDataLoader
 from torchvision.datasets import DatasetFolder
 import torch
+from random import uniform
 
 
 class AdniDataset(DatasetFolder):
-    def __init__(self, root, train=True, transforms=None, transform=None, target_transform=None):
+    def __init__(self, root, train=True, transform=None, target_transform=None):
         data_folder = os.path.join(root, ('train/' if train else 'test'))
         super().__init__(data_folder, AdniDataset.loader, extensions=('npy',), transform=transform, target_transform=target_transform)
 
@@ -22,11 +24,23 @@ class AdniDataset(DatasetFolder):
 
 class AdniDataLoader(BaseDataLoader):
     def __init__(self, data_dir, batch_size, shuffle=True, validation_split=0.0, num_workers=1, training=True):
-        trsfm = transforms.Compose([
-            transforms.ToTensor(),
-            transforms.Normalize((0.5,), (0.5,)),
-            transforms.Lambda(lambda x: x.repeat(3, 1, 1)),
-        ])
+        if training:
+            trsfm = transforms.Compose([
+                transforms.ToTensor(),
+                transforms.Normalize((0.5,), (0.5,)),
+                transforms.Lambda(lambda x: x.repeat(3, 1, 1)),
+                transforms.Lambda(lambda x: TF.adjust_contrast(x, contrast_factor=uniform(0.75,1.25))),
+                transforms.Lambda(lambda x: TF.adjust_brightness(x, brightness_factor=uniform(0.75, 1.25))),
+                # transforms.Lambda(lambda x: TF.center_crop(x, [x.shape[-2:][::-1][0] * uniform(0.75, 1)] * 2)),
+                # transforms.Lambda(lambda x: TF.resize(x, [100, 100])),
+            ])
+        else:
+            trsfm = transforms.Compose([
+                transforms.ToTensor(),
+                transforms.Normalize((0.5,), (0.5,)),
+                transforms.Lambda(lambda x: x.repeat(3, 1, 1)),
+            ])
+
         target_trsfm = transforms.Compose([
             transforms.Lambda(lambda x: float(x)),
             transforms.Lambda(lambda x: x / 180 * pi),
