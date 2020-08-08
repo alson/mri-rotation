@@ -1,9 +1,9 @@
 {
-    "name": "Adni_Net7",
+    "name": "Adni_Net8",
     "n_gpu": 1,
 
     "arch": {
-        "type": "AdniModel",
+        "type": "AdniModel50",
         "args": {}
     },
     "data_loader": {
@@ -19,7 +19,7 @@
     "optimizer": {
         "type": "AdamW",
         "args":{
-            "lr": 1e-2,
+            "lr": 5e-3,
             "weight_decay": 0.25e-3,
             "amsgrad": false
         }
