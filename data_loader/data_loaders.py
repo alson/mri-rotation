@@ -29,8 +29,8 @@ class AdniDataLoader(BaseDataLoader):
                 transforms.ToTensor(),
                 transforms.Normalize((0.5,), (0.5,)),
                 transforms.Lambda(lambda x: x.repeat(3, 1, 1)),
-                transforms.Lambda(lambda x: TF.adjust_contrast(x, contrast_factor=uniform(0.75,1.25))),
-                transforms.Lambda(lambda x: TF.adjust_brightness(x, brightness_factor=uniform(0.75, 1.25))),
+                transforms.Lambda(lambda x: TF.adjust_contrast(x, contrast_factor=uniform(0.9, 1.1))),
+                transforms.Lambda(lambda x: TF.adjust_brightness(x, brightness_factor=uniform(0.9, 1.1))),
                 # transforms.Lambda(lambda x: TF.center_crop(x, [x.shape[-2:][::-1][0] * uniform(0.75, 1)] * 2)),
                 # transforms.Lambda(lambda x: TF.resize(x, [100, 100])),
             ])

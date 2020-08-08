@@ -1,5 +1,5 @@
 {
-    "name": "Adni_Net8",
+    "name": "Adni_Net9",
     "n_gpu": 1,
 
     "arch": {
@@ -19,7 +19,7 @@
     "optimizer": {
         "type": "AdamW",
         "args":{
-            "lr": 5e-3,
+            "lr": 2e-3,
             "weight_decay": 0.25e-3,
             "amsgrad": false
         }
