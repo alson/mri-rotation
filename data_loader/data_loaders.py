@@ -26,9 +26,9 @@ class AdniDataLoader(BaseDataLoader):
     def __init__(self, data_dir, batch_size, shuffle=True, validation_split=0.0, num_workers=1, training=True):
         if training:
             trsfm = transforms.Compose([
-                transforms.ToPILImage(),
-                transforms.Lambda(lambda x: TF.center_crop(x, [x.width * uniform(0.8, 1)] * 2)),
-                transforms.Lambda(lambda x: TF.resize(x, [100, 100])),
+                # transforms.ToPILImage(),
+                # transforms.Lambda(lambda x: TF.center_crop(x, [x.width * uniform(0.8, 1)] * 2)),
+                # transforms.Lambda(lambda x: TF.resize(x, [100, 100])),
                 transforms.ToTensor(),
                 transforms.Normalize((0.5,), (0.5,)),
                 transforms.Lambda(lambda x: x.repeat(3, 1, 1)),
@@ -37,9 +37,9 @@ class AdniDataLoader(BaseDataLoader):
             ])
         else:
             trsfm = transforms.Compose([
-                transforms.ToPILImage(),
-                transforms.Lambda(lambda x: TF.resize(x, [100, 100])),
-                transforms.ToTensor(),
+                # transforms.ToPILImage(),
+                # transforms.Lambda(lambda x: TF.resize(x, [100, 100])),
+                # transforms.ToTensor(),
                 transforms.Normalize((0.5,), (0.5,)),
                 transforms.Lambda(lambda x: x.repeat(3, 1, 1)),
             ])
