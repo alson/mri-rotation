@@ -5,7 +5,7 @@ from torchvision.models import ResNet
 from torchvision.models.resnet import BasicBlock, Bottleneck
 
 
-class AdniModel34(ResNet):
+class AdniModel18(ResNet):
     def __init__(self, **kwargs):
         super().__init__(BasicBlock,  [2, 2, 2, 2], **kwargs)
         self.fc = nn.Linear(512 * BasicBlock.expansion, 2)

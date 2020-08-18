@@ -1,9 +1,9 @@
 {
-    "name": "Adni_Net13",
+    "name": "Adni_Net14",
     "n_gpu": 1,
 
     "arch": {
-        "type": "AdniModel50",
+        "type": "AdniModel18",
         "args": {}
     },
     "data_loader": {
