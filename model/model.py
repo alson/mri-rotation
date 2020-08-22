@@ -21,3 +21,9 @@ class AdniModel50(ResNet):
     def __init__(self, **kwargs):
         super().__init__(Bottleneck, [3, 4, 6, 3], **kwargs)
         self.fc = nn.Linear(512 * Bottleneck.expansion, 2)
+
+
+class AdniModel101(ResNet):
+    def __init__(self, **kwargs):
+        super().__init__(Bottleneck,[3, 4, 23, 3], **kwargs)
+        self.fc = nn.Linear(512 * Bottleneck.expansion, 2)
