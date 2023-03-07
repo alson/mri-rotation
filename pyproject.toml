@@ -5,12 +5,12 @@ description = "Neural network to correct rotation of MRI images."
 authors = ["Alson van der Meulen <git@alm.nufan.net>"]
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.8"
 nibabel = "^3.1.1"
 torch = "^1.5.1"
 matplotlib = "^3.3.0"
 scipy = "^1.5.2"
-numpy = "^1.19.1"
+numpy = "^1.22.0"
 scikit-learn = "^0.23"
 tensorboard = ">=1.14.0"
 torchvision = "^0.7.0"
