@@ -1,5 +1,7 @@
 import json
-import pandas as pd
+import pickle
+
+import torch
 from pathlib import Path
 from itertools import repeat
 from collections import OrderedDict
@@ -20,6 +22,19 @@ def write_json(content, fname):
     with fname.open('wt') as handle:
         json.dump(content, handle, indent=4, sort_keys=False)
 
+def load_checkpoint(path, logger):
+    '''
+    Load a checkpoint onto the CPU. Checkpoints are loaded weights-only (torch's safe default) when possible;
+    checkpoints saved before the config was stored as a plain dict contain a pickled ConfigParser and need a
+    full unpickle, so only load those from a trusted source.
+    '''
+    try:
+        return torch.load(path, map_location='cpu')
+    except pickle.UnpicklingError:
+        logger.warning("Checkpoint {} is in the legacy format (pickled ConfigParser); loading it with "
+                       "weights_only=False.".format(path))
+        return torch.load(path, map_location='cpu', weights_only=False)
+
 def inf_loop(data_loader):
     ''' wrapper function for endless data loader. '''
     for loader in repeat(data_loader):
@@ -28,22 +43,22 @@ def inf_loop(data_loader):
 class MetricTracker:
     def __init__(self, *keys, writer=None):
         self.writer = writer
-        self._data = pd.DataFrame(index=keys, columns=['total', 'counts', 'average'])
+        self._keys = keys
         self.reset()
-        
+
     def reset(self):
-        for col in self._data.columns:
-            self._data[col].values[:] = 0
+        self._total = dict.fromkeys(self._keys, 0.0)
+        self._counts = dict.fromkeys(self._keys, 0)
 
     def update(self, key, value, n=1):
+        value = float(value)
         if self.writer is not None:
             self.writer.add_scalar(key, value)
-        self._data.total[key] += value * n
-        self._data.counts[key] += n
-        self._data.average[key] = self._data.total[key] / self._data.counts[key]
+        self._total[key] += value * n
+        self._counts[key] += n
 
     def avg(self, key):
-        return self._data.average[key]
-    
+        return self._total[key] / self._counts[key]
+
     def result(self):
-        return dict(self._data.average)
+        return {key: self.avg(key) for key in self._keys}

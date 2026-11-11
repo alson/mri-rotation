@@ -3,24 +3,24 @@ name = "mri_rotation"
 version = "0.1.0"
 description = "Neural network to correct rotation of MRI images."
 authors = ["Alson van der Meulen <git@alm.nufan.net>"]
+package-mode = false
 
 [tool.poetry.dependencies]
-python = "^3.9"
-nibabel = "^3.1.1"
-torch = "^1.13.1"
-matplotlib = "^3.3.0"
-scipy = "^1.5.2"
-numpy = "^1.22.0"
-scikit-learn = "^1.5"
-tensorboard = ">=1.14.0"
-torchvision = "*"
-pandas = "^1.1.0"
-scikit-image = "^0.17.2"
+python = ">=3.12,!=3.14.1,<4.0"
+nibabel = "^5.5"
+torch = "^2.15"
+matplotlib = "^3.11"
+scipy = "^1.18"
+numpy = "^2.5"
+scikit-learn = "^1.9"
+tensorboard = "^2.21"
+torchvision = "^0.29"
+scikit-image = "^0.26"
 
-[tool.poetry.dev-dependencies]
-tqdm = "^4.66.3"
-pytest = "^7.2.0"
+[tool.poetry.group.dev.dependencies]
+tqdm = "^4.67"
+pytest = "^9.2"
 
 [build-system]
-requires = ["poetry>=0.12.2"]
-build-backend = "poetry.masonry.api"
+requires = ["poetry-core>=2.0"]
+build-backend = "poetry.core.masonry.api"

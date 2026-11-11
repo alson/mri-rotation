@@ -12,6 +12,17 @@ import torch
 from random import uniform
 
 
+# Transforms are module-level functions rather than lambdas so they can be pickled
+# for DataLoader worker processes (Python 3.14+ starts them with forkserver).
+def repeat_to_three_channels(x):
+    return x.repeat(3, 1, 1)
+
+
+def angle_to_sin_cos(angle_degrees):
+    angle = float(angle_degrees) / 180 * pi
+    return torch.tensor([sin(angle), cos(angle)])
+
+
 class AdniDataset(DatasetFolder):
     def __init__(self, root, train=True, transform=None, target_transform=None):
         data_folder = os.path.join(root, ('train/' if train else 'test'))
@@ -31,7 +42,7 @@ class AdniDataLoader(BaseDataLoader):
                 # transforms.Lambda(lambda x: TF.resize(x, [100, 100])),
                 transforms.ToTensor(),
                 transforms.Normalize((0.5,), (0.5,)),
-                transforms.Lambda(lambda x: x.repeat(3, 1, 1)),
+                transforms.Lambda(repeat_to_three_channels),
                 # transforms.Lambda(lambda x: TF.adjust_contrast(x, contrast_factor=uniform(0.95, 1.05))),
                 # transforms.Lambda(lambda x: TF.adjust_brightness(x, brightness_factor=uniform(0.95, 1.05))),
             ])
@@ -39,16 +50,12 @@ class AdniDataLoader(BaseDataLoader):
             trsfm = transforms.Compose([
                 # transforms.ToPILImage(),
                 # transforms.Lambda(lambda x: TF.resize(x, [100, 100])),
-                # transforms.ToTensor(),
+                transforms.ToTensor(),
                 transforms.Normalize((0.5,), (0.5,)),
-                transforms.Lambda(lambda x: x.repeat(3, 1, 1)),
+                transforms.Lambda(repeat_to_three_channels),
             ])
 
-        target_trsfm = transforms.Compose([
-            transforms.Lambda(lambda x: float(x)),
-            transforms.Lambda(lambda x: x / 180 * pi),
-            transforms.Lambda(lambda x: torch.tensor([sin(x), cos(x)])),
-        ])
+        target_trsfm = angle_to_sin_cos
         self.data_dir = data_dir
         self.dataset = AdniDataset(self.data_dir, train=training, transform=trsfm, target_transform=target_trsfm)
         super().__init__(self.dataset, batch_size, shuffle, validation_split, num_workers)

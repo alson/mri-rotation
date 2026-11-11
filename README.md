@@ -10,7 +10,7 @@ This is an experiment in training a deep neural network to learn to identify the
 
 This is based on [Victor Huang's PyTorch template project](https://github.com/victoresque/pytorch-template).
 
-This project uses [Poetry](https://python-poetry.org/) to manage dependencies and virtual environments. Use `poetry install` to set up a virtual environment with all dependencies installed. Then use `poetry shell` or `poetry run` to run commands inside this environment. All commands below should be run within the virtual environment created by Poetry from the project root.
+This project uses [Poetry](https://python-poetry.org/) to manage dependencies and virtual environments. It requires Python 3.12 or newer. Use `poetry install` to set up a virtual environment with all dependencies installed. Then use `poetry run` (or activate the environment with `eval $(poetry env activate)`) to run commands inside this environment. All commands below should be run within the virtual environment created by Poetry from the project root.
 
 ### Data
 
@@ -32,6 +32,6 @@ Train the network using the PyTorch template script:
 
 ### Visualizing training with Tensorboard
 
-You may need to manually install `setuptools` >= 49.0.0 through `pip` due to [this poetry bug / missing feature](https://github.com/python-poetry/poetry/issues/1584). Then run Tensorboard per the PyTorch template README:
+Run Tensorboard per the PyTorch template README:
 
 `tensorboard --logdir saved/log/`
