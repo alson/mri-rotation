@@ -28,8 +28,8 @@ big_square[x_in_square:x_in_square+mid_slice.shape[0], y_in_square:y_in_square+m
 square100x100 = resize(big_square, [100, 100], order=3)
 
 for angle in range(360):
+    # Always rotate the unrotated square, so the image in folder <angle> is rotated by exactly <angle> degrees.
     rotated_slice = rotate(square100x100, angle, reshape=False)
-    square100x100 = resize(rotated_slice, [100, 100], order=3)
     folder = OUT_PATH / f'{angle:03}'
     folder.mkdir(parents=True, exist_ok=True)
-    np.save(folder / f'{basename}.npy', square100x100.astype(np.float16))
+    np.save(folder / f'{basename}.npy', rotated_slice.astype(np.float16))

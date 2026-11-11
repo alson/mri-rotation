@@ -7,8 +7,8 @@ def mean_absolute_error(output, target):
     with torch.no_grad():
         pred = output
         assert pred.shape == target.shape
-        pred_angles = torch.atan(pred[:, 0] / pred[:, 1]) * 180 / pi
-        target_angles = torch.atan(target[:, 0] / target[:, 1]) * 180 / pi
+        pred_angles = torch.atan2(pred[:, 0], pred[:, 1]) * 180 / pi
+        target_angles = torch.atan2(target[:, 0], target[:, 1]) * 180 / pi
         pred_angles3 = pred_angles.repeat(3, 1).transpose(0, 1)
         target_angles3 = target_angles.repeat(3, 1).transpose(0, 1)
         offset3 = torch.tensor([0, 360, -360], device=pred.device).repeat(pred_angles.shape[0], 1)
@@ -20,8 +20,8 @@ def root_mean_squared_error(output, target):
     with torch.no_grad():
         pred = output
         assert pred.shape == target.shape
-        pred_angles = torch.atan(pred[:, 0] / pred[:, 1]) * 180 / pi
-        target_angles = torch.atan(target[:, 0] / target[:, 1]) * 180 / pi
+        pred_angles = torch.atan2(pred[:, 0], pred[:, 1]) * 180 / pi
+        target_angles = torch.atan2(target[:, 0], target[:, 1]) * 180 / pi
         pred_angles3 = pred_angles.repeat(3, 1).transpose(0, 1)
         target_angles3 = target_angles.repeat(3, 1).transpose(0, 1)
         offset3 = torch.tensor([0, 360, -360], device=pred.device).repeat(pred_angles.shape[0], 1)
